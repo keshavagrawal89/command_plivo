@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        <link rel="stylesheet" href="/site_media/css/style.css" type="text/css" />
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+        <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.9/jquery.form-validator.min.js"></script>
+		<script type="text/javascript" src="/site_media/js/annyang.js"></script>
+    <script type="text/javascript">
+        if(annyang)
+        {
+            var commands = {
+                'status': function() {
+				console.log("I am inside the function");
+				console.log("Value of hidden:" + $("#target_input").val());
+
+				$("#target_").submit();
+			    },
+				'total numbers': function(){
+				console.log("I am inside the function");
+				$("#target_").submit();
+				}
+            };
+
+			annyang.debug();
+            annyang.init(commands);
+            annyang.start();
+        
+
+		}
+    </script>
+    </head>
+
+    <body>
+        <h1 style="text-align:center;">{% block head %}{% endblock %}</h1>
+        <div class="page-wrap">
+            <div id="navigation">
+                <div class="hard-navigation">
+                        <a href="/call/">Call</a> <span style="color:black;"> | </span>
+                        <a href="/message/">Message</a> <span style="color:black;"> | </span>
+						<a href="/report/">Report</a>
+                </div>
+            </div>
+            <div class="content">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </body>
+
+</html>

@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block head %} Welcome {% endblock %}
+{% block content %}
+    <div>
+        Total numbers in the account: {{numbers_count}}
+    </div>
+    <div>
+        <form id="target_" action="/master_server/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="target_input" name="target_input" value="" />
+        </form>
+{% endblock %}
