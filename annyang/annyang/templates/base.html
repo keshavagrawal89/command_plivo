@@ -3,7 +3,10 @@
     <head>
         <title>{% block title %}{% endblock %}</title>
         <link rel="stylesheet" href="/site_media/css/style.css" type="text/css" />
-        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Sans' rel='stylesheet' type='text/css'>
+		<script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+		<script type="text/javascript" src="/site_media/js/scrollIt.min.js"></script>
         <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.1.9/jquery.form-validator.min.js"></script>
 		<script type="text/javascript" src="/site_media/js/annyang.js"></script>
     <script type="text/javascript">
@@ -11,18 +14,32 @@
         {
             var commands = {
                 'status': function() {
-				console.log("I am inside the function");
-				console.log("Value of hidden:" + $("#target_input").val());
-
+				setTimeout($("#target_input").val("plivostatus"), 1000);
 				$("#target_").submit();
-			    },
+			    	},
+			    	
 				'total numbers': function(){
-				console.log("I am inside the function");
+				setTimeout($("#target_input").val("total numbers"), 1000);
 				$("#target_").submit();
+				},
+
+				'call': function(){
+				$("#target_input").val("call");
+				$("#target_").submit();
+				},
+				
+				'call number *term': function(term){
+					var dst_number = term.replace(/\s+/g, '');
+					Plivo.conn.call(dst_number);
+					document.getElementById('dst-number').innerHTML = "Number being dialed is: " + dst_number;
+				},
+
+				'home': function(){
+					window.location = "/";
 				}
             };
 
-			annyang.debug();
+	    annyang.debug();
             annyang.init(commands);
             annyang.start();
         
@@ -36,15 +53,27 @@
         <div class="page-wrap">
             <div id="navigation">
                 <div class="hard-navigation">
-                        <a href="/call/">Call</a> <span style="color:black;"> | </span>
-                        <a href="/message/">Message</a> <span style="color:black;"> | </span>
-						<a href="/report/">Report</a>
+			<a href="/">Home</a>
                 </div>
             </div>
             <div class="content">
                 {% block content %}{% endblock %}
             </div>
         </div>
+
+	    <script>
+    	    $(function(){
+        	    $.scrollIt({
+					upKey: 38,             // key code to navigate to the next section
+					downKey: 40,           // key code to navigate to the previous section
+					easing: 'ease-out',      // the easing function for animation
+					scrollTime: 800,       // how long (in ms) the animation takes
+					activeClass: 'active', // class given to the active nav element
+					onPageChange: null,    // function(pageIndex) that is called when page is changed
+					topOffset: 0           // offste (in px) for fixed top navigation
+				});
+			});
+    </script>
     </body>
 
 </html>
