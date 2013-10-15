@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block head %} Welcome {% endblock %}
+{% block content %}
+	<script type="text/javascript" src="https://s3.amazonaws.com/plivosdk/web/plivo.min.js"></script>
+	<script type= "text/javascript">
+	$(document).ready( function(){
+	
+		Plivo.onReady = onReady;
+		Plivo.onLogin = onLogin;
+		Plivo.onLoginFailed = onLoginFailed;
+		Plivo.onLogout = onLogout; 
+		Plivo.onCalling = onCalling;
+		Plivo.onCallRemoteRinging = onCallRemoteRinging;
+		Plivo.onCallAnswered = onCallAnswered;
+		Plivo.onCallTerminated = onCallTerminated;
+		Plivo.onCallFailed = onCallFailed; 
+		Plivo.onMediaPermission = onMediaPermission;
+
+		var config = {
+			'debug':'true'
+		};
+		Plivo.init(config);
+	});
+
+	function onLogin(){
+		console.log("Logged In!");
+	}
+
+	function onLogout(){
+		console.log("Logged out!");
+	}
+	function onReady(){
+		console.log('I am ready');
+	}
+
+	function onLoginFailed(){
+		$("#status-box").html("Login failed for some reason!");
+		console.log("Login failed for some reason!");
+	}
+
+	function onMediaPermission(){
+		console.log("Media permission granted!");
+		setTimeout(Plivo.conn.login($("#username").val(), $("#password").val()), 1000);
+	}
+
+	function onCalling(){
+		$("#status-box").html("Number is being called");
+		console.log("onCalling mode is on!");
+	}
+
+	function onCallRemoteRinging(){
+		$("#status-box").html("Remote party is getting the ringy dingy!");
+		console.log("onRemoteRinging mode is on!");
+	}
+
+	function onCallAnswered(){
+		$("#status-box").html("Your call has been answered &#9786;");
+		console.log("onCallAnswered mode is on!");
+        $("#dial-pad").removeAttr("style");
+		$("#dial-pad").css({
+			'opacity':1,
+		});
+	}
+
+	function onCallTerminated(){
+		$("#status-box").html("Call session terminated!");
+		console.log("onCallTerminated mode is on!");
+		$("#dial-pad").removeAttr("style");
+        $("#dial-pad").css({
+            'opacity':'0',
+        });
+
+	}
+
+	function onCallFailed(){
+		$("#status-box").html("Call session failed to get established!");
+		console.log("onCallFailed mode is on!");
+        $("#dial-pad").removeAttr("style");
+        $("#dial-pad").css({
+            'opacity':'0',
+        });
+
+	}
+	</script>
+    <div>
+        <form id="target_" action="/master_server/" method="POST">
+            {% csrf_token %}
+            <input type="hidden" id="target_input" name="target_input" value="" />
+        </form>
+    <!-- Put in your endpoint id and password -->
+		<input type="hidden" id="username" name="username" value="<endpoint_id>"/>
+		<input type="hidden" id="password" name="password" value="<password>"/>
+
+	</div>
+	<div id="number-div" class="center-div">
+		<p id="dst-number">Speak the number you want to dial!</p>
+	</div>
+	<div class = "status center-div" id="status-call" name="status-call">
+		<p class="" id="status-box">Your status will be shown here!</p>
+	</div>
+	<div id="dial-pad" name="dial-pad" class="center-div"/>
+		<button class="dial-btn">1</button>
+		<button class="dial-btn">2</button>
+		<button class="dial-btn">3</button>
+		<button class="dial-btn">4</button>
+		<button class="dial-btn">5</button>
+		<button class="dial-btn">6</button>
+		<button class="dial-btn">7</button>
+		<button class="dial-btn">8</button>
+		<button class="dial-btn">9</button>
+		<button class="dial-btn">*</button>
+		<button class="dial-btn">0</button>
+		<button class="dial-btn">#</button>
+	</div>
+{% endblock %}
+
