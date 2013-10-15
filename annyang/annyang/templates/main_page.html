@@ -1,12 +1,27 @@
 {% extends "base.html" %}
 {% block head %} Welcome {% endblock %}
 {% block content %}
-	<div>
-		Hey There! I am brand new.
+	<div class="center-div">
+		<div class="center-div circle" id="call-ico" name="call-ico">
+			<a href="#" data-scroll-nav="0"><img src="/site_media/images/012.png"/></a>
+		</div>
+		
+		<h2>A combination of Annyang JS + WebRTC + Plivo API</h2>
+		<h3>var variables = annyanjs + webrtc + plivoapi&#59;</h3>
+		<h3> an idea &#10140; <span style="font-size:70px;">&#8747;</span>variables = good thing! &#9786;</h3>
+		<div class="description" id="description" name="description" data-scroll-index="0">
+			<p>&#10102; AnnyangJS allows you to add speech functionality to your website.</p>
+			<p>&#10103; WebRTC makes audio and video communication possible directly through browser. No plug-ins!</p>
+			<p>&#10104; Plivo API and WebSDK makes possible to "call"</p>
+			<p>Lets speak something then... Yes?!</p>
+			<p>&#8675;</p>
+			<p>Speak out "Call"...</p>
+		</div>
 	</div>
 	<div>
 		<form id="target_" action="/master_server/" method="POST">
 			{% csrf_token %}
 			<input type="hidden" id="target_input" name="target_input" value="" />
 		</form>
+	</div>
 {% endblock %}
