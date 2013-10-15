@@ -21,11 +21,16 @@ def main_page(request):
 
 def master_server(request):
 	request_type = request.POST.get('target_input')
+	
 	if (request_type == 'plivo status') or (request_type == 'plivostatus'):
 		variables = {'':''}
+		# This guy currently does nothing but you can trigger
+		# plivo API status check and return the result.
 		return render_to_response('status.html', RequestContext(request, variables))
 
+	# This is simple demonstration of how account numbers can be pulled by using Plivo API
 	elif(request_type == 'total numbers'):
+		
 		plivo_api = get_plivo_api()
 		status, data = plivo_api.get_numbers()
 
@@ -33,6 +38,11 @@ def master_server(request):
 		variables = {'numbers_count':numbers_count}
 
 		return render_to_response('numbers.html', RequestContext(request, variables))
+
+	elif(request_type == 'call'):
+		variables = {'':''}
+		
+		return render_to_response('call.html', RequestContext(request, variables))
 	else:
 		variables = {'':''}
 		return render_to_response('main_page.html', RequestContext(request, variables))
